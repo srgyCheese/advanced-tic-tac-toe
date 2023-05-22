@@ -1,5 +1,5 @@
-import { assert, expect, test } from 'vitest'
-import { FieldTypes, TicTacToeMatrix } from "./TicTacToeMatrix"
+import { expect, test } from 'vitest'
+import { FieldTypes, TicTacToeMatrix, rotateMatrix } from "./TicTacToeMatrix"
 
 const {O, X, EMPTY} = FieldTypes
 
@@ -7,6 +7,11 @@ const xWinMatrixDiagonal = new TicTacToeMatrix([
   [O, EMPTY,     X],
   [O, X,     EMPTY],
   [X, EMPTY, EMPTY],
+])
+const xWinMatrixDiagonal2 = new TicTacToeMatrix([
+  [X,     EMPTY, O],
+  [O,     X,     EMPTY],
+  [EMPTY, EMPTY, X],
 ])
 
 const xWinMatrixColumn = new TicTacToeMatrix([
@@ -21,13 +26,44 @@ const fullWithoutWinner = new TicTacToeMatrix([
   [X, X, O],
 ])
 
+const xWinnerDiagonal5x5 = new TicTacToeMatrix([
+  [X, O, O, O],
+  [O, X, O, O],
+  [O, O, X, O],
+  [X, O, O, X],
+], 4)
+
+test('Check matrix rotation', () => {
+  expect(rotateMatrix([
+    [X, X, O],
+    [O, O, X],
+    [X, X, O],
+  ])).toStrictEqual([
+    [X, O, X],
+    [X, O, X],
+    [O, X, O],
+  ])
+
+  expect(rotateMatrix([
+    [X, X, O, X, X],
+    [O, O, X, O, O],
+    [X, X, O, X, X],
+  ])).toStrictEqual([
+    [X, O, X],
+    [X, O, X],
+    [O, X, O],
+    [X, O, X],
+    [X, O, X],
+  ])
+})
+
 test('Check getMatch', () => {
   expect(xWinMatrixDiagonal.getMatch()).toStrictEqual({
     character: FieldTypes.X,
     coords: [
-      { x: 0, y: 2 },
+      { x: 2, y: 0 },
       { x: 1, y: 1 },
-      { x: 2, y: 0 }
+      { x: 0, y: 2 },
     ]
   })
 
@@ -40,7 +76,26 @@ test('Check getMatch', () => {
     ]
   })
 
+  expect(xWinMatrixDiagonal2.getMatch()).toStrictEqual({
+    character: FieldTypes.X,
+    coords: [
+      { x: 0, y: 0 },
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+    ]
+  })
+
   expect(fullWithoutWinner.getMatch()).toBe(undefined)
+
+  expect(xWinnerDiagonal5x5.getMatch()).toStrictEqual({
+    character: FieldTypes.X,
+    coords: [
+      { x: 0, y: 0 },
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+      { x: 3, y: 3 },
+    ]
+  })
 })
 
 test('Check isFull', () => {
