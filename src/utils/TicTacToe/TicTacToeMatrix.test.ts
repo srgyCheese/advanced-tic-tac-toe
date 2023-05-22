@@ -1,5 +1,7 @@
 import { expect, test } from 'vitest'
-import { FieldTypes, TicTacToeMatrix, rotateMatrix } from "./TicTacToeMatrix"
+import { TicTacToeMatrix } from "./TicTacToeMatrix"
+import { FieldTypes } from './types'
+import { rotateMatrix } from './matrixFunctions'
 
 const {O, X, EMPTY} = FieldTypes
 
