@@ -86,6 +86,21 @@ export class TicTacToeMatrix {
     }
   }
 
+  private getMatchInRow(row: Field[]): Match | undefined {
+    if (row.length < this.matchLength) {
+      return
+    }
+
+    const longestMatchArray = getLongestMatchArray(row)
+
+    if (longestMatchArray.length >= this.matchLength) {
+      return {
+        character: longestMatchArray[0].character,
+        coords: longestMatchArray.map(field => field.coords)
+      }
+    }
+  }
+
   private getMatchInRows(matrix = this.matrix) {
     for (let row = 0; row < matrix.length; row++) {
       const fieldsRow: Field[] = matrix[row].map((character, column) => ({
@@ -103,35 +118,23 @@ export class TicTacToeMatrix {
       }
     }
   }
-
-  private getMatchInRow(row: Field[]): Match | undefined {
-    if (row.length < this.matchLength) {
-      return
-    }
-
-    const longestMatchArray = getLongestMatchArray(row)
-
-    if (longestMatchArray.length >= this.matchLength) {
-      return {
-        character: longestMatchArray[0].character,
-        coords: longestMatchArray.map(field => field.coords)
-      }
-    }
-  }
-
+  
   private getMatchInColumn() {
     const transposedMatrix = this.transposed()
 
     for (let row = 0; row < transposedMatrix.length; row++) {
-      const matrixRow = transposedMatrix[row]
-      if (matrixRow.every(v => v !== FieldTypes.EMPTY && v === matrixRow[0])) {
-        return {
-          character: matrixRow[0],
-          coords: matrixRow.map((el, y) => ({
-            y,
-            x: row
-          }))
+      const fieldsRow: Field[] = transposedMatrix[row].map((character, column) => ({
+        character,
+        coords: {
+          x: row, 
+          y: column
         }
+      }))
+
+      const match = this.getMatchInRow(fieldsRow)
+
+      if (match) {
+        return match
       }
     }
   }
@@ -159,4 +162,6 @@ export class TicTacToeMatrix {
       return diagonalsMatch
     }
   }
+
+
 }
