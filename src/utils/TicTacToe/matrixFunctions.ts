@@ -1,4 +1,4 @@
-import { Field, FieldTypes, Matrix } from "./types"
+import { Coords, Field, FieldTypes, Matrix } from "./types"
 
 export const rotateMatrix = <T extends any[][]>(matrix: T) => {
   return matrix[0].map((_, index) => matrix.map(row => row[index]).reverse())
@@ -54,3 +54,7 @@ export const formatMatrix = (matrix: Matrix) => {
     }))
   })
 }
+
+export const generateEmptyMatrix = (size: Coords): Matrix => {
+  return Array(size.y).fill([]).map(() => Array(size.x).fill(FieldTypes.EMPTY))
+} 

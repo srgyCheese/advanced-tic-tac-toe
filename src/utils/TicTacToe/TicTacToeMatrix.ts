@@ -17,7 +17,7 @@ export class TicTacToeMatrix {
     this.matchLength = matchLength
   }
 
-  private setMatrix(matrix: Matrix) {
+  setMatrix(matrix: Matrix) {
     this.matrix = matrix
     this.fieldMatrix = formatMatrix(matrix)
   }
@@ -35,12 +35,12 @@ export class TicTacToeMatrix {
     return (xCount - oCount) === 0 ? FieldTypes.X : FieldTypes.O
   }
 
-  transposed() {
+  private transposed() {
     let [firstRow] = this.matrix
     return firstRow.map((_, column) => this.matrix.map(row => row[column]))
   }
 
-  rotated() {
+  private rotated() {
     return rotateMatrix(this.fieldMatrix)
   }
 
@@ -78,7 +78,7 @@ export class TicTacToeMatrix {
     return diagonals
   }
 
-  getMatchInDiagonals() {
+  private getMatchInDiagonals() {
     const diagonals: Field[][] = [...this.getDiagonals(), ...this.getDiagonals(true)]
 
     for (let diagonal of diagonals) {
@@ -168,10 +168,14 @@ export class TicTacToeMatrix {
   }
 
   getCharacter(coords: Coords) {
-    return this.matrix[coords.x][coords.y]
+    return this.matrix[coords.y][coords.x]
   }
 
-  setSymbol(character: FieldTypes.X | FieldTypes.O, coords: Coords) {
+  isEnd() {
+    return !!this.getMatch() || this.isFull()
+  }
+
+  setCharacter(character: FieldTypes.X | FieldTypes.O, coords: Coords) {
     if (character !== this.getCurrentStepSymbol()) {
       return
     }
@@ -180,7 +184,11 @@ export class TicTacToeMatrix {
       return
     }
 
-    this.matrix[coords.x][coords.y] = character
-    this.setMatrix(this.matrix.map(row => row.map(char => char)))
+    if (this.isEnd()) {
+      return
+    }
+
+    this.matrix[coords.y][coords.x] = character
+    this.setMatrix(this.matrix)
   }
 }
