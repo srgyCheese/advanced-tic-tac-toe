@@ -9,7 +9,9 @@ type MatrixSettings = {size?: Coords, matchLength?: number}
 export const useTicTacToe = ({size = {x: 3, y: 3}, matchLength = 3}: MatrixSettings) => {
   const [matrix, setMatrix] = useState(generateEmptyMatrix(size))
   
-  const ticTacToeMatrix = useMemo(() => new TicTacToeMatrix(matrix, matchLength), [matrix, matchLength])
+  const ticTacToeMatrix = useMemo(() => {
+    return new TicTacToeMatrix(matrix, matchLength)
+  }, [matrix, matchLength])
 
   useEffect(() => {
     setMatrix(generateEmptyMatrix(size))

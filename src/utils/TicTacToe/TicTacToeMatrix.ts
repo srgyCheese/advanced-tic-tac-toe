@@ -7,8 +7,8 @@ export class TicTacToeMatrix {
   matchLength: number
 
   constructor(matrix: Matrix, matchLength: number = 3) {
-    if (matchLength < matrix[0].length && matchLength < matrix.length) {
-      throw new Error('Matrix match length should be lower then matrix height or width')
+    if (matchLength > matrix[0].length && matchLength > matrix.length) {
+      matchLength = Math.max(matrix[0].length, matrix.length)
     }
 
     this.matrix = matrix
