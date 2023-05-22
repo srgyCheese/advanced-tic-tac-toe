@@ -1,7 +1,7 @@
 import { Field, FieldTypes, Matrix } from "./types"
 
 export const rotateMatrix = <T extends any[][]>(matrix: T) => {
-  return matrix[0].map((val, index) => matrix.map(row => row[index]).reverse())
+  return matrix[0].map((_, index) => matrix.map(row => row[index]).reverse())
 }
 
 export const getLongestMatchArray = (fields: Field[]) => {

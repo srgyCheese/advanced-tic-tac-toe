@@ -4,20 +4,16 @@ export enum FieldTypes {
   O = 2
 }
 
+export type Coords = { x: number, y: number }
+
 export type Matrix = FieldTypes[][]
 
 export type Field = {
   character: FieldTypes,
-  readonly coords: {
-    x: number,
-    y: number
-  }
+  readonly coords: Coords
 }
 
 export type Match = {
   character: FieldTypes
-  coords: {
-      y: number
-      x: number
-  }[]
+  coords: Coords[]
 }

@@ -1,5 +1,5 @@
-import { formatMatrix, getLongestMatchArray, rotateMatrix } from "./matrixFunctions"
-import { Field, FieldTypes, Match, Matrix } from "./types"
+import { formatMatrix, getLongestMatchArray, rotateMatrix } from './matrixFunctions';
+import { Coords, Field, FieldTypes, Match, Matrix } from "./types"
 
 export class TicTacToeMatrix {
   matrix: Matrix
@@ -12,10 +12,14 @@ export class TicTacToeMatrix {
     }
 
     this.matrix = matrix
-
     this.fieldMatrix = formatMatrix(matrix)
 
     this.matchLength = matchLength
+  }
+
+  private setMatrix(matrix: Matrix) {
+    this.matrix = matrix
+    this.fieldMatrix = formatMatrix(matrix)
   }
 
   getCurrentStepSymbol() {
@@ -33,7 +37,7 @@ export class TicTacToeMatrix {
 
   transposed() {
     let [firstRow] = this.matrix
-    return firstRow.map((value, column) => this.matrix.map(row => row[column]))
+    return firstRow.map((_, column) => this.matrix.map(row => row[column]))
   }
 
   rotated() {
@@ -163,5 +167,20 @@ export class TicTacToeMatrix {
     }
   }
 
+  getCharacter(coords: Coords) {
+    return this.matrix[coords.x][coords.y]
+  }
 
+  setSymbol(character: FieldTypes.X | FieldTypes.O, coords: Coords) {
+    if (character !== this.getCurrentStepSymbol()) {
+      return
+    }
+
+    if (this.getCharacter(coords) !== FieldTypes.EMPTY) {
+      return
+    }
+
+    this.matrix[coords.x][coords.y] = character
+    this.setMatrix(this.matrix.map(row => row.map(char => char)))
+  }
 }
