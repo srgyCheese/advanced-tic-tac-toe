@@ -1,4 +1,4 @@
-import { formatMatrix, getLongestMatchArray, rotateMatrix } from './matrixFunctions';
+import { formatMatrix, getDiagonals, getLongestMatchArray, rotateMatrix } from './matrixFunctions';
 import { Coords, Field, FieldTypes, Match, Matrix } from "./types"
 
 export class TicTacToeMatrix {
@@ -47,39 +47,11 @@ export class TicTacToeMatrix {
   getDiagonals(rotated?: boolean) {
     let matrix = rotated ? this.rotated() : this.fieldMatrix
 
-    const diagonals: Field[][] = []
-    const rowsCount = matrix.length
-    const columnsCount = matrix[0].length
-
-    const numberOfDiagonals = (rowsCount + columnsCount) - 1
-
-    for (let diagonalIndex = 0; diagonalIndex < numberOfDiagonals; diagonalIndex++) {
-      const fromRow = Math.max(0, (diagonalIndex + 1) - columnsCount)
-      const fromColumn = Math.min(diagonalIndex, rowsCount)
-
-      const diagonal: Field[] = []
-
-      let currentRow = fromRow
-      let currentColumn = fromColumn
-
-      while (currentRow <= (rowsCount - 1) && currentColumn >= 0 && matrix[currentRow][currentColumn] !== undefined) {
-        diagonal.push({
-          character: matrix[currentRow][currentColumn].character,
-          coords: matrix[currentRow][currentColumn].coords
-        })
-
-        currentRow++
-        currentColumn--
-      }
-
-      diagonals.push(diagonal)
-    }
-
-    return diagonals
+    return getDiagonals(matrix)
   }
 
   private getMatchInDiagonals() {
-    const diagonals: Field[][] = [...this.getDiagonals(), ...this.getDiagonals(true)]
+    const diagonals = [...this.getDiagonals(), ...this.getDiagonals(true)]
 
     for (let diagonal of diagonals) {
       const match = this.getMatchInRow(diagonal)
@@ -105,34 +77,13 @@ export class TicTacToeMatrix {
     }
   }
 
-  private getMatchInRows(matrix = this.matrix) {
+  private getMatchInRows(transposed?: boolean) {
+    let matrix = transposed ? this.transposed() : this.matrix
+
     for (let row = 0; row < matrix.length; row++) {
       const fieldsRow: Field[] = matrix[row].map((character, column) => ({
         character,
-        coords: {
-          x: column, 
-          y: row
-        }
-      }))
-
-      const match = this.getMatchInRow(fieldsRow)
-
-      if (match) {
-        return match
-      }
-    }
-  }
-  
-  private getMatchInColumn() {
-    const transposedMatrix = this.transposed()
-
-    for (let row = 0; row < transposedMatrix.length; row++) {
-      const fieldsRow: Field[] = transposedMatrix[row].map((character, column) => ({
-        character,
-        coords: {
-          x: row, 
-          y: column
-        }
+        coords: transposed ? { x: row, y: column } : { x: column, y: row }
       }))
 
       const match = this.getMatchInRow(fieldsRow)
@@ -154,7 +105,7 @@ export class TicTacToeMatrix {
       return horizontalMatch
     }
 
-    const verticalMatch = this.getMatchInColumn()
+    const verticalMatch = this.getMatchInRows(true)
 
     if (verticalMatch) {
       return verticalMatch

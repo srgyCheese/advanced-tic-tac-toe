@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import { TicTacToeMatrix } from "./TicTacToeMatrix"
 import { FieldTypes } from './types'
-import { rotateMatrix } from './matrixFunctions'
+import { formatMatrix, getDiagonals, getLongestMatchArray, rotateMatrix } from './matrixFunctions'
 
 const {O, X, EMPTY} = FieldTypes
 
@@ -34,6 +34,42 @@ const xWinnerDiagonal5x5 = new TicTacToeMatrix([
   [O, O, X, O],
   [X, O, O, X],
 ], 4)
+
+test('Check getLongestMatchArray', () => {
+  expect(getLongestMatchArray(formatMatrix([
+    [FieldTypes.O, FieldTypes.X, FieldTypes.X, FieldTypes.X]
+  ])[0])).toHaveLength(3)
+})
+
+test('Check getDiagonals', () => {
+  expect(getDiagonals([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+  ])).toStrictEqual([
+    [1],
+    [2,4],
+    [3, 5, 7],
+    [6, 8],
+    [9]
+  ])
+  
+
+  expect(getDiagonals([
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+    [13, 14, 15, 16],
+  ])).toStrictEqual([
+    [1],
+    [2, 5],
+    [3, 6, 9],
+    [4, 7, 10, 13],
+    [8, 11, 14],
+    [12, 15],
+    [16]
+  ])
+})
 
 test('Check matrix rotation', () => {
   expect(rotateMatrix([
