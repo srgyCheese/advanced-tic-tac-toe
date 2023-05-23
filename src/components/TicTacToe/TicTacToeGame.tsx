@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import TicTacToeTable from './TicTacToeTable'
 import { Coords } from '../../utils/TicTacToe'
 import { useTicTacToe } from '../../hooks/useTicTacToe'

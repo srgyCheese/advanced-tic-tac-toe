@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './Home.module.scss'
 import TicTacToeGame from '../../components/TicTacToe/TicTacToeGame'
 
