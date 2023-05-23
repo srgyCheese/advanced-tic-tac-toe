@@ -1,0 +1,24 @@
+.enter {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.enterActive {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.exit {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.exitActive {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.enterActive,
+.exitActive {
+  transition: opacity 300ms, transform 300ms;
+}

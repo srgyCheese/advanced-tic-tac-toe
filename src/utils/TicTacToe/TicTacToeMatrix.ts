@@ -175,6 +175,10 @@ export class TicTacToeMatrix {
     return !!this.getMatch() || this.isFull()
   }
 
+  isStarted() {
+    return this.matrix.flat().some(character => character !== FieldTypes.EMPTY)
+  }
+
   setCharacter(character: FieldTypes.X | FieldTypes.O, coords: Coords) {
     if (character !== this.getCurrentStepSymbol()) {
       return

@@ -15,7 +15,8 @@ const TicTacToeGame = () => {
     currentStepSymbol,
     match,
     isEnd,
-    restart
+    restart,
+    isStarted
   } = useTicTacToe({ size, matchLength: validMatchLength })
 
   return (
@@ -41,6 +42,7 @@ const TicTacToeGame = () => {
         matchLength={validMatchLength}
         setSize={setSize}
         setMatchLength={setMatchLength}
+        isStarted={isStarted}
       />
     </div>
   )

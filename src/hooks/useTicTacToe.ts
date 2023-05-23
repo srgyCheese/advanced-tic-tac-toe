@@ -26,6 +26,7 @@ export const useTicTacToe = ({size = {x: 3, y: 3}, matchLength = 3}: MatrixSetti
   const isFull = useMemo(() => ticTacToeMatrix.isFull(), [matrix])
   const match = useMemo(() => ticTacToeMatrix.getMatch(), [matrix])
   const isEnd = useMemo(() => ticTacToeMatrix.isEnd(), [matrix])
+  const isStarted = useMemo(() => ticTacToeMatrix.isStarted(), [matrix])
   const restart = useCallback(() => setMatrix(generateEmptyMatrix(size)), [size.x, size.y])
   
   return {
@@ -35,6 +36,7 @@ export const useTicTacToe = ({size = {x: 3, y: 3}, matchLength = 3}: MatrixSetti
     isFull,
     match,
     isEnd,
-    restart
+    restart,
+    isStarted
   }
 }
