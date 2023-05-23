@@ -25,6 +25,10 @@
       width: 100%;
       padding: 10%;
       box-sizing: border-box;
+      
+      path {
+        transition: fill 0.3s;
+      }
     }
   }
 
@@ -59,5 +63,8 @@
 }
 
 .highlighted {
-  background-color: rgb(80 88 116 / 53%);;
+  background-color: rgb(80 88 116 / 53%);
+  path {
+    fill: rgb(183 198 255);
+  }
 }
