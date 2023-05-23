@@ -1,0 +1,26 @@
+.gameControllers {
+  margin-top: 35px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+
+  button {
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: rgb(59 64 78);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+}
+
+.gameController {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+}
