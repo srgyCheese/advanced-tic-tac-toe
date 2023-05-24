@@ -2,6 +2,7 @@ import styles from './TicTacToeTable.module.scss'
 import { Coords, Matrix } from '../../utils/TicTacToe'
 import { Match } from '../../utils/TicTacToe/types'
 import TableField from './TableField'
+import classNames from 'classnames'
 
 type Props = {
   matrix: Matrix,
@@ -19,8 +20,16 @@ const isCoordsInMatch = (match: Match | undefined, coords: Coords): boolean => {
 }
 
 const TicTacToeTable = ({ matrix, onElementClick, match, isEnd }: Props) => {
+  const borderWidth = Math.round((1 / Math.log2(matrix.length)) * 5) + 1
+  const borderRadius = Math.round((1 / Math.log2(matrix.length)) * 30)
+
   return (
-    <table className={styles['tic-tac-toe-table'] + (isEnd ? ` ${styles.ended}` : '')}>
+    <table 
+      className={classNames(styles['tic-tac-toe-table'], isEnd && styles.ended)}
+      style={{
+        borderRadius: `${borderRadius}px`
+      }}
+    >
       <tbody>
         {matrix.map((row, y) => (
           <tr key={y}>
@@ -30,6 +39,9 @@ const TicTacToeTable = ({ matrix, onElementClick, match, isEnd }: Props) => {
                 key={x}
                 className={isCoordsInMatch(match, { x, y }) ? styles.highlighted : ''}
                 fieldType={item}
+                style={{
+                  borderWidth: `${borderWidth}px`
+                }}
               />
             ))}
           </tr>

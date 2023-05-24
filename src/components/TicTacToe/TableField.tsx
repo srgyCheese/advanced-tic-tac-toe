@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { CSSProperties, useRef } from 'react'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import fadeSizeTransition from './fade-size-transition.module.css'
 import { FieldTypes } from '../../utils/TicTacToe/types'
@@ -6,10 +6,11 @@ import { FieldTypes } from '../../utils/TicTacToe/types'
 type Props = {
   onClick?: () => void,
   className?: string,
-  fieldType: FieldTypes
+  fieldType: FieldTypes,
+  style?: CSSProperties
 }
 
-const TableField = ({ onClick, className, fieldType }: Props) => {
+const TableField = ({ onClick, className, fieldType, style }: Props) => {
   let tdInner = null
 
   const xRef = useRef<HTMLDivElement>(null)
@@ -53,6 +54,7 @@ const TableField = ({ onClick, className, fieldType }: Props) => {
     <td
       onClick={onClick}
       className={className}
+      style={style}
     >
       <SwitchTransition mode='out-in'>
         <CSSTransition
