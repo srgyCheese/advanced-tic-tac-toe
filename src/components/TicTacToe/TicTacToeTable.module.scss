@@ -6,8 +6,8 @@
   border-radius: 25px;
   overflow: hidden;
 
-  width: 500px;
-  height: 500px;
+  width: min(500px, 90vw);
+  height: min(500px, 90vw);
 
   td {
     border: 5px solid rgb(125, 158, 230);
@@ -19,6 +19,7 @@
     height: 100%;
 
     svg {
+      -webkit-tap-highlight-color: transparent;
       cursor: pointer;
       display: block;
       height: 100%;
